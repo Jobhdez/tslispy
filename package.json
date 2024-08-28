@@ -1,0 +1,19 @@
+{
+  "name": "scheme-ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "antlr4ts": "antlr4ts -visitor Scheme.g4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.5.1",
+    "antlr4ts": "^0.5.0-alpha.4",
+    "antlr4ts-cli": "^0.5.0-alpha.4",
+    "typescript": "^5.5.4"
+  }
+}
