@@ -353,18 +353,20 @@ export class BuildASTVisitor
   }
 }
 
-const input = "(let ((n 2)) (begin (set n 3) (if (> n 2) t f)))";
-const inputStream = new ANTLRInputStream(input);
-const lexer = new SchemeLexer(inputStream);
-const tokenStream = new CommonTokenStream(lexer);
-const parser = new SchemeParser(tokenStream);
+const parse_tree_to_ast = (exp) => {
+  const inputStream = new ANTLRInputStream(exp);
+  const lexer = new SchemeLexer(inputStream);
+  const tokenStream = new CommonTokenStream(lexer);
+  const parser = new SchemeParser(tokenStream);
 
-const tree = parser.prog();
-const visitor = new BuildASTVisitor();
-const ast = visitor.visit(tree);
+  const tree = parser.prog();
+  const visitor = new BuildASTVisitor();
+  const ast = visitor.visit(tree);
 
-console.log(ast);
+  //console.log(ast);
 
-let letexp = ast[0];
-let bg = letexp.body.expressions;
-console.log(bg);
+  //let letexp = ast[0];
+  //let bg = letexp.body.expressions;
+  //console.log(bg);
+  return ast;
+};
