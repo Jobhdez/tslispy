@@ -22,8 +22,9 @@ exp
     | '(' '-' exp exp ')'                        # ExpMinus
     | '(' '<' exp exp ')'                        # ExpLess
     | '(' '>' exp exp ')'                       # ExpGreater
-    | INT                                # ExpInt
-    | '(' '-' INT ')'                            # ExpNegative
+    | INT                                      # ExpInt
+    | '(' '-' INT ')'                           # ExpNegative
+    | '(' exp+ ')'                              # ExpApplication
     ;
 
 

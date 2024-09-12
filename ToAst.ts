@@ -25,13 +25,14 @@ import {
   ProgContext,
   ExpContext,
   BindingContext,
+  ExpApplicationContext,
   SchemeParser,
 } from "./SchemeParser";
 
 import { AbstractParseTreeVisitor } from "antlr4ts/tree/AbstractParseTreeVisitor";
 import { SchemeVisitor } from "./SchemeVisitor";
 
-class LetExpressionAST {
+export class LetExpressionAST {
   bindings: { variable: string; value: any }[];
   body: any;
 
@@ -41,7 +42,14 @@ class LetExpressionAST {
   }
 }
 
-class SetExpressionAST {
+export class ApplicationExpAST {
+  exps: any[];
+  constructor(expressions: any[]) {
+    this.exps = expressions;
+  }
+}
+
+export class SetExpressionAST {
   variable: string;
   value: any;
 
@@ -51,7 +59,7 @@ class SetExpressionAST {
   }
 }
 
-class BeginExpressionAST {
+export class BeginExpressionAST {
   expressions: any[];
 
   constructor(expressions: any[]) {
@@ -59,7 +67,7 @@ class BeginExpressionAST {
   }
 }
 
-class IfExpressionAST {
+export class IfExpressionAST {
   condition: any;
   thenBranch: any;
   elseBranch: any;
@@ -71,7 +79,7 @@ class IfExpressionAST {
   }
 }
 
-class WhileExpressionAST {
+export class WhileExpressionAST {
   condition: any;
   body: any;
 
@@ -81,7 +89,7 @@ class WhileExpressionAST {
   }
 }
 
-class BoolExpressionAST {
+export class BoolExpressionAST {
   value: boolean;
 
   constructor(value: boolean) {
@@ -89,7 +97,7 @@ class BoolExpressionAST {
   }
 }
 
-class VectorRefExpressionAST {
+export class VectorRefExpressionAST {
   vector: any;
   index: number;
 
@@ -99,7 +107,7 @@ class VectorRefExpressionAST {
   }
 }
 
-class VectorExpressionAST {
+export class VectorExpressionAST {
   elements: any[];
 
   constructor(elements: any[]) {
@@ -107,7 +115,7 @@ class VectorExpressionAST {
   }
 }
 
-class VectorLengthExpressionAST {
+export class VectorLengthExpressionAST {
   vector: any;
 
   constructor(vector: any) {
@@ -115,7 +123,7 @@ class VectorLengthExpressionAST {
   }
 }
 
-class AndExpressionAST {
+export class AndExpressionAST {
   left: any;
   right: any;
 
@@ -125,7 +133,7 @@ class AndExpressionAST {
   }
 }
 
-class OrExpressionAST {
+export class OrExpressionAST {
   left: any;
   right: any;
 
@@ -135,7 +143,7 @@ class OrExpressionAST {
   }
 }
 
-class NotExpressionAST {
+export class NotExpressionAST {
   expression: any;
 
   constructor(expression: any) {
@@ -143,7 +151,7 @@ class NotExpressionAST {
   }
 }
 
-class EqExpressionAST {
+export class EqExpressionAST {
   left: any;
   right: any;
 
@@ -153,7 +161,7 @@ class EqExpressionAST {
   }
 }
 
-class PlusExpressionAST {
+export class PlusExpressionAST {
   left: any;
   right: any;
 
@@ -163,7 +171,7 @@ class PlusExpressionAST {
   }
 }
 
-class MinusExpressionAST {
+export class MinusExpressionAST {
   left: any;
   right: any;
 
@@ -173,7 +181,7 @@ class MinusExpressionAST {
   }
 }
 
-class LessExpressionAST {
+export class LessExpressionAST {
   left: any;
   right: any;
 
@@ -183,7 +191,7 @@ class LessExpressionAST {
   }
 }
 
-class GreaterExpressionAST {
+export class GreaterExpressionAST {
   left: any;
   right: any;
 
@@ -193,7 +201,7 @@ class GreaterExpressionAST {
   }
 }
 
-class IntExpressionAST {
+export class IntExpressionAST {
   value: number;
 
   constructor(value: number) {
@@ -201,7 +209,7 @@ class IntExpressionAST {
   }
 }
 
-class NegativeExpressionAST {
+export class NegativeExpressionAST {
   value: number;
 
   constructor(value: number) {
@@ -209,7 +217,7 @@ class NegativeExpressionAST {
   }
 }
 
-export class BuildASTVisitor
+class BuildASTVisitor
   extends AbstractParseTreeVisitor<any>
   implements SchemeVisitor<any>
 {
@@ -348,12 +356,17 @@ export class BuildASTVisitor
     return new NegativeExpressionAST(parseInt(ctx.INT().text, 10));
   }
 
+  visitExpApplication(ctx: ExpApplicationContext): ApplicationExpAST {
+    const elements = ctx.exp().map((exp) => this.visit(exp));
+    return new ApplicationExpAST(elements);
+  }
+
   visitProg(ctx: ProgContext): any {
     return ctx.exp().map((exp) => this.visit(exp));
   }
 }
 
-const parse_tree_to_ast = (exp) => {
+export const parse_tree_to_ast = (exp: string) => {
   const inputStream = new ANTLRInputStream(exp);
   const lexer = new SchemeLexer(inputStream);
   const tokenStream = new CommonTokenStream(lexer);
@@ -370,3 +383,10 @@ const parse_tree_to_ast = (exp) => {
   //console.log(bg);
   return ast;
 };
+
+let ast = parse_tree_to_ast("(let ((n 3)) (+ n n))");
+console.log(ast);
+let ast_let = ast[0];
+let bindings = ast_let.bindings;
+console.log(parse_tree_to_ast("(let ((n 3)) (+ n n))"));
+console.log(bindings);

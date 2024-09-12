@@ -24,6 +24,7 @@ import { ExpLessContext } from "./SchemeParser";
 import { ExpGreaterContext } from "./SchemeParser";
 import { ExpIntContext } from "./SchemeParser";
 import { ExpNegativeContext } from "./SchemeParser";
+import { ExpApplicationContext } from "./SchemeParser";
 import { ProgContext } from "./SchemeParser";
 import { ExpContext } from "./SchemeParser";
 import { BindingContext } from "./SchemeParser";
@@ -205,6 +206,14 @@ export interface SchemeVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitExpNegative?: (ctx: ExpNegativeContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `ExpApplication`
+	 * labeled alternative in `SchemeParser.exp`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitExpApplication?: (ctx: ExpApplicationContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `SchemeParser.prog`.

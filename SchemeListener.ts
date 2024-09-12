@@ -24,6 +24,7 @@ import { ExpLessContext } from "./SchemeParser";
 import { ExpGreaterContext } from "./SchemeParser";
 import { ExpIntContext } from "./SchemeParser";
 import { ExpNegativeContext } from "./SchemeParser";
+import { ExpApplicationContext } from "./SchemeParser";
 import { ProgContext } from "./SchemeParser";
 import { ExpContext } from "./SchemeParser";
 import { BindingContext } from "./SchemeParser";
@@ -307,6 +308,19 @@ export interface SchemeListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitExpNegative?: (ctx: ExpNegativeContext) => void;
+
+	/**
+	 * Enter a parse tree produced by the `ExpApplication`
+	 * labeled alternative in `SchemeParser.exp`.
+	 * @param ctx the parse tree
+	 */
+	enterExpApplication?: (ctx: ExpApplicationContext) => void;
+	/**
+	 * Exit a parse tree produced by the `ExpApplication`
+	 * labeled alternative in `SchemeParser.exp`.
+	 * @param ctx the parse tree
+	 */
+	exitExpApplication?: (ctx: ExpApplicationContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `SchemeParser.prog`.
