@@ -1,2 +1,2 @@
 clean:
-	rm *.js && rm Parser/*.js
+	rm Interpreter/*.js && rm Parser/*.js
