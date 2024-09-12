@@ -1,10 +1,10 @@
 # tslispy
 
-a scheme compiler in the making written in typescript!
+a Scheme interpreter :-)
 
 to run it:
 
 ```
 $ npx tsc
-$ tsc Interp.js
+$ node Interp.js
 ```
