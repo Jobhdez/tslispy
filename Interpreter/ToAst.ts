@@ -376,17 +376,5 @@ export const parse_tree_to_ast = (exp: string) => {
   const visitor = new BuildASTVisitor();
   const ast = visitor.visit(tree);
 
-  //console.log(ast);
-
-  //let letexp = ast[0];
-  //let bg = letexp.body.expressions;
-  //console.log(bg);
   return ast;
 };
-
-let ast = parse_tree_to_ast("(let ((n 3)) (+ n n))");
-console.log(ast);
-let ast_let = ast[0];
-let bindings = ast_let.bindings;
-console.log(parse_tree_to_ast("(let ((n 3)) (+ n n))"));
-console.log(bindings);
