@@ -6,5 +6,5 @@ to run it:
 
 ```
 $ npx tsc
-$ tsc Interp.js
+$ node Interp.js
 ```
