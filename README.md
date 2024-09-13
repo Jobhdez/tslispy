@@ -2,8 +2,14 @@
 
 a Scheme interpreter :-)
 
-to run it:
+to run the repl:
 
 ```
 $ make repl
+```
+
+to run the server:
+
+```
+$ make serve
 ```
