@@ -80,7 +80,7 @@ function standardEnv(): Env {
 
 const globalEnv = standardEnv();
 
-function interp(exp: any, env: Env = globalEnv): any {
+export function interp(exp: any, env: Env = globalEnv): any {
   switch (exp.constructor) {
     case BoolExpressionAST:
       return exp.value;
@@ -146,7 +146,7 @@ function interp(exp: any, env: Env = globalEnv): any {
 
 type SchemeValue = boolean | string | SchemeValue[];
 
-function jsToScheme(e: SchemeValue): string {
+export function jsToScheme(e: SchemeValue): string {
   if (Array.isArray(e)) {
     return "(" + e.map(jsToScheme).join(" ") + ")";
   } else if (e === true) {
@@ -158,7 +158,7 @@ function jsToScheme(e: SchemeValue): string {
   }
 }
 
-async function repl(prompt: string = "lambda> "): Promise<void> {
+export async function repl(prompt: string = "lambda> "): Promise<void> {
   const readline = require("readline");
   const rl = readline.createInterface({
     input: process.stdin,
@@ -186,5 +186,3 @@ async function repl(prompt: string = "lambda> "): Promise<void> {
     }
   }
 }
-
-repl();
