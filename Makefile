@@ -3,4 +3,4 @@ clean:
 repl:
 	npx tsc && node repl.js
 serve:
-	npx tsc && node server/server.js
+	npx tsc && DEBUG=express:* node server/server.js
